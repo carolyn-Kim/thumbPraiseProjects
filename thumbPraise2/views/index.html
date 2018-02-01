@@ -1,0 +1,43 @@
+{% extends 'layout.html' %} 
+
+{% block title %}{{title}}{% endblock %} 
+{% block head %} 
+<link rel="stylesheet" href="../stylesheets/style.css">
+ {% endblock %} 
+{% block content %}
+
+<div class="hand-bg">
+    <div class="hand" id="hand">
+        <div class="finger"></div>
+        <div class="finger"></div>
+        <div class="finger"></div>
+        <div class="finger"></div>
+        <div class="finger"></div>
+        <div class="palm"></div>
+        <div class="arm"></div>
+    </div>
+    <span id="counter">+1</span>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/systemjs/0.20.2/system.js"></script>
+<!-- <script src="https://cdn.bootcss.com/axios/0.17.1/axios.min.js"></script> -->
+<script src="../scripts/axios.min.js"></script>
+<script src="../scripts/add.js"></script>
+<script>
+    SystemJS.config({
+            baseURL: '../scripts/'
+        })
+        SystemJS.import('index.js').then(function (m) {
+
+            $.extend({
+                thumb: m.Thumb
+            })
+            thumb();
+
+        });
+        function thumb() {
+            var res = new $.thumb(0, $('#hand'));
+            res.clickFn();
+        }
+</script>
+{% endblock %}
