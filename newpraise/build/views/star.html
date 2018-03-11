@@ -1,0 +1,62 @@
+{% extends 'layout.html' %} 
+
+{% block title %}{{title}}{% endblock %} 
+{% block head %} 
+
+    <link href="../public/stylesheets/praise.css" rel="stylesheet">
+
+ {% endblock %} 
+{% block content %}
+
+<x-star></x-star>
+
+
+
+    <script>
+        
+        (function () {
+            var scriptsarr = [];
+            var flag=false;
+        
+                scriptsarr.push("../public/scripts/common.js");
+        
+                scriptsarr.push("../public/scripts/praise.js");
+        
+                scriptsarr.push("../public/scripts/index.js");
+        
+
+        
+        for (let index = 0; index < scriptsarr.length; index++) {
+            const element = scriptsarr[index];
+            if (localStorage.getItem(element)) {
+                $("<script>"+localStorage.getItem(element)+"<\/script>").attr({ type: "text/javascript",id: index }).appendTo($("head"));
+            }else{
+                /* $.getScript({
+                    url:element,
+                    success:function(data){
+                        localStorage.setItem(element,data);
+                    }
+                }) */
+                localStorage.clear();
+                flag=true;
+                for (let index = 0; index < scriptsarr.length; index++) {
+                    let element = scriptsarr[index];
+                    axios.get(element).then(function(data) {
+                        localStorage.setItem(element,data.data);
+                    })
+                }
+                break;
+
+            }
+            
+        }
+        if (flag) {
+            LazyLoad.js(scriptsarr,function() {
+            });
+        }
+            
+        })()
+    </script>
+
+
+{% endblock %}

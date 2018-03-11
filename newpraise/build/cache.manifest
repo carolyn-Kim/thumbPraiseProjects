@@ -1,0 +1,9 @@
+CACHE MANIFEST
+# Time: Sun Mar 11 2018 20:04:15 GMT+0800 (CST)
+# koatesting
+
+CACHE:
+../public/stylesheets/praise.css
+
+NETWORK:
+*

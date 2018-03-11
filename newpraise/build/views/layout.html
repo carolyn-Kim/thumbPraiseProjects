@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="dns-prefetch" href="https://cdn.bootcss.com/">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.17.1/axios.min.js"></script>
+    <script src="https://cdn.bootcss.com/x-tag/1.5.11/x-tag-core.js"></script>
+    <script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+    <script src="https://cdn.bootcss.com/localforage/1.6.0/localforage.js"></script>
+    <script src="https://cdn.bootcss.com/lazyload/2.0.3/lazyload-min.js"></script>
+    {% block head %}
+    
+     {% endblock %}
+</head>
+
+<body>
+    <a href="/index/star">✨跳转到星星点赞✨</a>
+    <br>
+    <a href="/index/praise">👍跳转到大拇指点赞👍</a>
+
+    <div id="changeCon">
+         {% block content %}{% endblock %}
+    </div>
+    <script>
+    $(document).pjax('a', '#changeCon');
+    localforage.getItem('ad',function (err, value) {
+        if (value==null) {
+            $.ajax({
+                url:'/index/ad',
+                success:function(data){
+                    localforage.setItem('ad',data);
+                    $('body').prepend(data);
+                }
+            })
+        }else{
+            $("body").prepend(value);
+        }
+    })
+    </script>
+</body>
+
+</html>
